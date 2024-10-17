@@ -83,6 +83,9 @@ class Card: Comparable {
     func getCardIsSpecial() -> Bool {
         return self.isSpecial;
     }
+    func setCardValue(value:Int) -> Void {
+        self.value = value; 
+    }
     static func == (lhs: Card, rhs: Card) -> Bool {
         return lhs.getCardSuit() == rhs.getCardSuit() && lhs.getCardValue() == rhs.getCardValue()
     }

@@ -46,17 +46,19 @@ class Deck {
     }
     func getCard(index:Int) -> Card{
         let x: Card = cards[index]
-        cards.remove(at: index)
         return x
     }
     
     func getTopCard() -> Card {
         let x: Card = cards[0]
-        cards.remove(at: 0)
         return x
     }
     
     func getSize() -> Int{
         return cards.count
     }
+    func removeCard(index:Int) -> Void {
+        cards.remove(at: index)
+    }
+    
 }

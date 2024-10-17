@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Meld {
+class Meld: Equatable{
     
     enum ClosedTypes {
         case semi;
@@ -77,12 +77,30 @@ class Meld {
         }
     }
     
-    func addCard(card:Card) -> Void {
-        cards.append(card);
+    func addCard(card:Card, index:Int) -> Void {
+        cards.insert(card, at: index);
     }
     
-    func addCard(cards:[Card]) -> Void {
-        self.cards.append(contentsOf: cards);
+    func addCards(cards:[Card], indecies:[Int]) -> Void {
+        for i in 0...cards.count {
+            addCard(card:cards[i], index:indecies[i])
+        }
+    }
+    
+    static func == (lhs: Meld, rhs: Meld) -> Bool {
+        if lhs.getType() == rhs.getType() {
+            for card in lhs.getCards() {
+                for card2 in rhs.getCards() {
+                    if card == card2 {
+                        return true
+                    }
+                }
+            }
+        }
+        else{
+            return false
+        }
+        return false
     }
 
 }
