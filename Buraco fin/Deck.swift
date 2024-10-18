@@ -13,23 +13,23 @@ class Deck {
     init(){
         cards = []
         for i in 3...13 {
-            cards.append(Card(suit:Card.suits.club, value: i))
+            cards.append(Card(suit:Card.suits.club, rank: i))
         }
         for i in 3...13 {
-            cards.append(Card(suit:Card.suits.diamond, value: i))
+            cards.append(Card(suit:Card.suits.diamond, rank: i))
         }
         for i in 3...13 {
-            cards.append(Card(suit:Card.suits.heart, value: i))
+            cards.append(Card(suit:Card.suits.heart, rank: i))
         }
         for i in 3...13 {
-            cards.append(Card(suit:Card.suits.spade, value: i))
+            cards.append(Card(suit:Card.suits.spade, rank: i))
         }
-        cards.append(Card(suit: Card.suits.club, value: 2, isSpecial: true))
-        cards.append(Card(suit: Card.suits.diamond, value: 2, isSpecial: true))
-        cards.append(Card(suit: Card.suits.heart, value: 2, isSpecial: true))
-        cards.append(Card(suit: Card.suits.spade, value: 2, isSpecial: true))
-        cards.append(Card(suit: Card.suits.joker, value: Card.values.joker.rawValue, isSpecial: true))
-        cards.append(Card(suit: Card.suits.joker, value: Card.values.joker.rawValue, isSpecial: true))
+        cards.append(Card(suit: Card.suits.club, rank: 2, value: Card.values.joker))
+        cards.append(Card(suit: Card.suits.diamond, rank: 2, value: Card.values.joker))
+        cards.append(Card(suit: Card.suits.heart, rank: 2, value: Card.values.joker))
+        cards.append(Card(suit: Card.suits.spade, rank: 2, value: Card.values.joker))
+        cards.append(Card(suit: Card.suits.joker, rank: 0, value: Card.values.joker))
+        cards.append(Card(suit: Card.suits.joker, rank: 0, value: Card.values.joker))
     }
     
     func shuffle() -> Void {

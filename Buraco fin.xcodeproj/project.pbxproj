@@ -27,6 +27,7 @@
 		E129755A2CA8E3D600080228 /* Buraco fin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Buraco fin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E129756A2CA8E3D800080228 /* Buraco finTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Buraco finTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E12975742CA8E3D800080228 /* Buraco finUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Buraco finUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E12975992CC2EF0300080228 /* Buraco fin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "Buraco fin.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -88,6 +89,13 @@
 				E129755A2CA8E3D600080228 /* Buraco fin.app */,
 				E129756A2CA8E3D800080228 /* Buraco finTests.xctest */,
 				E12975742CA8E3D800080228 /* Buraco finUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E129759A2CC2EF0300080228 /* Products */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -198,6 +206,12 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E129755B2CA8E3D600080228 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E129759A2CC2EF0300080228 /* Products */;
+					ProjectRef = E12975992CC2EF0300080228 /* Buraco fin.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				E12975592CA8E3D600080228 /* Buraco fin */,

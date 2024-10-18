@@ -75,61 +75,56 @@ class Player {
         //TODO: set joker value based on cards
             // - sequence vs card needed
         // think about if player wants to place joker on top or at bottom, maybe overload function to take in top or bottom with everything else, might also want to create one where they can insert the joker in a meld already placed
-        var bool:Bool = true
-        for i in 0..<cards.count - 1 {
-            if cards[i].getCardValue() != cards[i+1].getCardValue() {
-                bool = false
-            }
-        }
-        if bool {
-            joker.setCardValue(value: cards[0].getCardValue())
-        }
-        for i in 0..<cards.count - 1 {
-            if cards[i].getCardValue() - cards[i + 1].getCardValue() > 1 {
-                joker.setCardValue(value: cards[0].getCardValue() + 1)
-            }
-        }
     }
     
     func closeMeld(meld:Meld)-> Void {
-        meld.setIsClosed(bool: true)
-        var cards: [Card] = meld.getCards()
+        meld.setIsClosed(bool: true);
+        var cards: [Card] = meld.getCards();
         var type:Meld.ClosedTypes = Meld.ClosedTypes.notClosed;
         var temp:Card;
-        var countSpecial:Int = 0;
+        var countJokers:Int = 0;
+        //count how many jokers are in meld
         for card in cards {
-            if card.getCardIsSpecial() {
-                temp = card
-                countSpecial += 1
+            if card.getCardIsJoker() {
+                temp = card;
+                countJokers += 1;
             }
         }
-        if true {//search up how to check if variable exists when
+        //if only 1 joker, check if semi or dirty
+        if (countJokers == 1) {
             if (meld.getType() == Meld.types.sameValue) {
-                type = Meld.ClosedTypes.dirty
+                type = Meld.ClosedTypes.dirty;
             }
             else if (meld.getType() == Meld.types.straight){
                 if (temp.getCardSuit() == cards[0].getCardSuit()) && (temp.getCardSuit() == cards[1].getCardSuit()){
-                    type = Meld.ClosedTypes.semi
+                    type = Meld.ClosedTypes.semi;
                 } else {
-                    type = Meld.ClosedTypes.dirty
+                    type = Meld.ClosedTypes.dirty;
                 }
-            } else if (countSpecial > 0){
-                type = Meld.ClosedTypes.jokers
             }
+            // if multiple jokers, set to meld of jokers
+        } else if (countJokers > 1){
+            type = Meld.ClosedTypes.jokers;
+            
         }
+        //set melds closed type
+        meld.setClosedType(type: type);
         
-        meld.setClosedType(type: type)
+        //remove meld from the ones in play
         for i in 0...meldsInPlay.count - 1 {
             if meld == meldsInPlay[i] {
-                meldsInPlay.remove(at: i)
+                meldsInPlay.remove(at: i);
             }
         }
-        closedMelds.append(meld)
+        //add meld to closed melds
+        closedMelds.append(meld);
     }
-    
+    //TODO: account for aces and jokers being placed before other things
     func placeCardInMeld(card:Card, meld:Meld) -> Void{
+        //if the meld is of same value, add card to the end
         if meld.getType() == Meld.types.sameValue{
             meld.addCard(card: card, index:meld.getCount())
+            //if the meld is a sequence, put the card into the right spot
         } else if (meld.getType() == Meld.types.straight){
             for i in 0..<meld.getCount() {
                 if (card < meld.getCards()[i + 1]) && (card > meld.getCards()[i]) {
@@ -139,7 +134,7 @@ class Player {
             if card < meld.getCards()[meld.getCount() - 1]{
                 meld.addCard(card: card, index: meld.getCount() - 1)
             }
-        } else if (meld.getType() == Meld.types.jokers) && (card.getCardIsSpecial()){
+        } else if (meld.getType() == Meld.types.jokers) && (card.getCardIsJoker()){
             meld.addCard(card: card, index: 0)
         } else {
             print ("Error: meld does not have type or Card cannot be inseted")

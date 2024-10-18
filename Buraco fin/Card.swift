@@ -16,60 +16,61 @@ class Card: Comparable {
         case diamond;
         case joker; 
     }
-    public enum values: Int {
-        case ace = 13;
+    public enum ranks: Int {
+        case ace1 = 1;
+        case ace14 = 14;
         case king = 12;
         case queen = 11;
         case jack = 10;
-        case joker = 1;
+        case joker = 0;
+    }
+    public enum values {
+        case joker;
+        case unknown;
+        case rank;
     }
     
-    private var value:Int;
+    private var rank:Int;
     private var suit:suits;
-    private var isSpecial:Bool;
     private var pointValue:Int;
+    private var value: values;
     
-    init(suit:suits, value:Int){
+    init(suit:suits, rank:Int, value:values){
         self.suit = suit;
+        self.rank = rank;
         self.value = value;
-        self.isSpecial = false;
         
-        if(value < 8){
+        if (value == .joker) {
+            if (rank == 2) {
+                self.pointValue = 25;
+            }
+            else if (rank == 0) {
+                self.pointValue = 50;
+            }
+            else {
+                self.pointValue = 20;
+                print("error: value_out_of_bounds")
+            }
+        }
+        else if(1 < rank && rank < 8){
             self.pointValue = 5;
-        } else if(7 < value && value < 13){
+        } else if(7 < rank && rank < 14){
             self.pointValue = 10;
-        } else if(value == 13){
+        } else if(rank == 1 || rank == 14){
             self.pointValue = 15;
         }
         else {
-            self.pointValue = 0;
+            self.pointValue = 20;
             print("error: value_out_of_bounds")
         }
     }
     
-    init(suit: suits, value:Int, isSpecial:Bool){
-        self.suit = suit;
-        self.value = value;
-        self.isSpecial = isSpecial;
-        if (isSpecial && value == 2){
-            self.pointValue = 25;
-        } else if(isSpecial && value == 1){
-            self.pointValue = 50;
-        } else if(value < 8){
-            self.pointValue = 5;
-        } else if(7 < value && value < 13){
-            self.pointValue = 10;
-        } else if(value == 13){
-            self.pointValue = 15;
-        }
-        else {
-            self.pointValue = 0;
-            print("error: value_out_of_bounds");
-        }
+    convenience init(suit: suits, rank:Int){
+        self.init(suit: suit, rank: rank, value: .rank)
     }
     
-    func getCardValue() -> Int {
-        return self.value;
+    func getCardRank() -> Int {
+        return self.rank;
     }
     
     func getCardSuit() -> suits {
@@ -80,20 +81,20 @@ class Card: Comparable {
         return self.pointValue;
     }
     
-    func getCardIsSpecial() -> Bool {
-        return self.isSpecial;
+    func getCardIsJoker() -> Bool {
+        return (self.value == .joker);
     }
-    func setCardValue(value:Int) -> Void {
-        self.value = value; 
+    func setJokerRank(rank:Int) -> Void {
+        self.rank = rank;
     }
     static func == (lhs: Card, rhs: Card) -> Bool {
-        return lhs.getCardSuit() == rhs.getCardSuit() && lhs.getCardValue() == rhs.getCardValue()
+        return lhs.getCardSuit() == rhs.getCardSuit() && lhs.getCardRank() == rhs.getCardRank();
     }
     static func < (lhs: Card, rhs: Card) -> Bool {
-        return lhs.getCardValue() < rhs.getCardValue()
+        return lhs.getCardRank() < rhs.getCardRank();
     }
     static func > (lhs: Card, rhs: Card) -> Bool {
-        return lhs.getCardValue() > rhs.getCardValue()
+        return lhs.getCardRank() > rhs.getCardRank();
     }
     
     
