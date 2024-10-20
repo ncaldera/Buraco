@@ -25,12 +25,30 @@ class Meld: Equatable{
     private var type: types;
     private var isClosed:Bool;
     private var closedType: ClosedTypes;
+    private var hasJoker: Bool;
     
     init(cards: [Card], type: types){
         self.cards = cards;
         self.type = type;
         self.isClosed = false;
         self.closedType = ClosedTypes.notClosed;
+        var count:Int = 0;
+        for card in cards {
+            if !card.getCardIsJoker() {
+                count += 1
+            }
+        }
+        if count == 1 {
+            self.hasJoker = true
+        } else if count == 0 {
+            self.hasJoker = false
+        } else if count == cards.count {
+            self.type = .jokers
+            self.hasJoker = true
+        }
+        else {
+            self.hasJoker = false
+        }
     }
     
     func getCards() -> [Card] {
@@ -77,11 +95,39 @@ class Meld: Equatable{
         }
     }
     
+    func getHasJoker() -> Bool {
+        return hasJoker
+    }
+    
+    func getJokerIndex() -> Int {
+        assert(hasJoker, "error: meld does not have joker")
+        var jokerIndex:Int? = nil
+        for i in 0..<getCount() {
+            if getCards()[i].getCardIsJoker() {
+                jokerIndex = i
+            }
+        }
+        return jokerIndex!
+    }
+    
+    func replaceJoker(card:Card) -> Card {
+        assert(hasJoker, "error: meld does not have joker")
+        let joker = cards[getJokerIndex()]
+        cards[getJokerIndex()] = card
+        return joker 
+    }
+    
+    func setHasJoker(bool:Bool) -> Void {
+        hasJoker = bool 
+    }
+    
     func addCard(card:Card, index:Int) -> Void {
+        assert(index < cards.count, "index_out_of_bounds")
         cards.insert(card, at: index);
     }
     
     func addCards(cards:[Card], indecies:[Int]) -> Void {
+        assert(indecies.max()! < cards.count, "index_out_of_bounds")
         for i in 0...cards.count {
             addCard(card:cards[i], index:indecies[i])
         }

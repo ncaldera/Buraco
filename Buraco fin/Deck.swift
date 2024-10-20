@@ -45,6 +45,7 @@ class Deck {
         cards = temp
     }
     func getCard(index:Int) -> Card{
+        assert(index < cards.count, "index_out_of_bounds")
         let x: Card = cards[index]
         return x
     }
@@ -58,6 +59,7 @@ class Deck {
         return cards.count
     }
     func removeCard(index:Int) -> Void {
+        assert(index < cards.count, "index_out_of_bounds")
         cards.remove(at: index)
     }
     

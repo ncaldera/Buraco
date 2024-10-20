@@ -17,6 +17,7 @@ class Card: Comparable {
         case joker; 
     }
     public enum ranks: Int {
+        //default for ace should be ace1
         case ace1 = 1;
         case ace14 = 14;
         case king = 12;
@@ -36,6 +37,8 @@ class Card: Comparable {
     private var value: values;
     
     init(suit:suits, rank:Int, value:values){
+        assert(rank >= 0)
+        
         self.suit = suit;
         self.rank = rank;
         self.value = value;
@@ -68,6 +71,9 @@ class Card: Comparable {
     convenience init(suit: suits, rank:Int){
         self.init(suit: suit, rank: rank, value: .rank)
     }
+    convenience init(){
+        self.init(suit: .spade, rank: 20, value: .unknown)
+    }
     
     func getCardRank() -> Int {
         return self.rank;
@@ -85,6 +91,10 @@ class Card: Comparable {
         return (self.value == .joker);
     }
     func setJokerRank(rank:Int) -> Void {
+        self.rank = rank;
+    }
+    func setAceRank(rank:Int) -> Void {
+        assert(rank == 1 || rank == 14, "Card_is_not_an_ace");
         self.rank = rank;
     }
     static func == (lhs: Card, rhs: Card) -> Bool {
